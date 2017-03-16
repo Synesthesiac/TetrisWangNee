@@ -1,17 +1,32 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Main extends JPanel {
-    static final int FRAMEWIDTH = 500, FRAMEHEIGHT = 500;
-    static Block test = new Block(250, 250);
+    static final int FRAMEWIDTH = 801, FRAMEHEIGHT = 800;
+    static final int[][] map = new int[30][20];
+    static final int blockSize = 20;
 
+    private static final ArrayList<Shape> pieces = new ArrayList<>();
     public Main() {
+        pieces.add(new TShape(250, 250, 1));
         repaint();
     }
 
-    public void draw(Graphics g) {
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        test.draw(g2);
+
+        //MAP GRID
+        for(int r = 0; r < map.length; r++) {
+            for(int c = 0; c < map[r].length; c++) {
+                g2.drawRect(c*blockSize + 80, r*blockSize + 80, blockSize, blockSize);
+            }
+        }
+
+        for(Shape p : pieces) {
+            p.draw(g2);
+        }
     }
 
     public static void main(String[] args) {
