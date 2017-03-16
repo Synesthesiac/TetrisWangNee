@@ -1,16 +1,27 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Main extends JPanel {
     static final int FRAMEWIDTH = 801, FRAMEHEIGHT = 800;
     static final int[][] map = new int[30][20];
+    static boolean[][] fill = new boolean[30][20];
     static final int blockSize = 20;
+    Timer timer;
 
     private static final ArrayList<Shape> pieces = new ArrayList<>();
     public Main() {
         pieces.add(new TShape(250, 250, 1));
-        repaint();
+        timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("lmao");
+                repaint();
+            }
+        });
+        timer.start();
     }
 
     public void paintComponent(Graphics g) {
