@@ -11,5 +11,21 @@ public class Block {
         g2.setColor(Color.BLACK);
         g2.fillRect(x, y, 20, 20);
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setX(int i) {
+        x += i;
+    }
+
+    public void setY(int i) {
+        y += i;
+    }
 }
 
