@@ -20,8 +20,17 @@ public class Main extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controls();
-                System.out.println("lmao");
                 repaint();
+            }
+        });
+        timer.start();
+
+        timer = new Timer(500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for(Block b : curr.component) {
+                    b.setY(20);
+                }
             }
         });
         timer.start();
@@ -48,18 +57,23 @@ public class Main extends JPanel {
             for(Block b : curr.component) {
                 b.setX(-20);
             }
+            curr.setX(-20);
+            keys[KeyEvent.VK_A] = false;
         }else if(keys[KeyEvent.VK_W]) {
-            for(Block b : curr.component) {
-                b.setY(-20);
-            }
+            curr.setOrientation();
+            keys[KeyEvent.VK_W] = false;
         }else if(keys[KeyEvent.VK_S]) {
             for(Block b : curr.component) {
                 b.setY(20);
             }
+            curr.setY(20);
+            keys[KeyEvent.VK_S] = false;
         }else if(keys[KeyEvent.VK_D]) {
             for(Block b : curr.component) {
                 b.setX(20);
             }
+            curr.setX(20);
+            keys[KeyEvent.VK_D] = false;
         }
     }
 
