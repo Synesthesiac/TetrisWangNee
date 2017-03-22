@@ -11,21 +11,22 @@ public class Block {
         g2.setColor(Color.BLACK);
         g2.fillRect(x, y, 20, 20);
     }
-
-    public int getX() {
-        return x;
+    
+    @Override
+    public String toString() {
+    	return "X";
     }
-
-    public int getY() {
-        return y;
-    }
-
+    
     public void setX(int i) {
-        x += i;
+    	x += i;
     }
-
+    
     public void setY(int i) {
-        y += i;
+    	y += i;
+    }
+    
+    public Point getLoc() {
+    	return new Point(x, y);
     }
 }
 

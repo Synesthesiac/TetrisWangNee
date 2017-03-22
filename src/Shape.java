@@ -9,9 +9,6 @@ public class Shape {
         orientation = o;
     }
 
-    public void build(){
-    }
-
     public void draw(Graphics2D g2) {
         if(component.length != 0) {
             for (Block b : component) {
@@ -20,20 +17,72 @@ public class Shape {
         }
     }
 
-    public void setOrientation() {
-        if(orientation >= 4) {
-            orientation = 1;
-        }else {
-            orientation++;
-        }
-        build();
+    public void update(String dir) {
+    	int checkX, checkY;
+    	if(dir.equals("RIGHT")) {
+    		checkX = 0;
+    		for(Block b : component) {
+    			checkX = Math.max(checkX, (int)(b.getLoc().getX()) - 80);
+    		}
+    		if(checkX < Main.map[0].length * 19) {
+	    		x += 20;
+	    		for(Block b : component) {
+	    			b.setX(20);
+	    		}
+    		}
+    	}else if(dir.equals("LEFT")) {
+    		checkX = Integer.MAX_VALUE;
+    		for(Block b : component) {
+    			checkX = Math.min(checkX, (int)(b.getLoc().getX()));
+    		}
+    		if(checkX > 80) {
+				x -= 20;
+				for (Block b : component) {
+					b.setX(-20);
+				}
+			}
+    	}else {
+    		checkY = 0;
+    		for(Block b : component) {
+    			checkY = Math.max(checkY, (int)(b.getLoc().getY()) - 80);
+    		}
+    		if(checkY < Main.map.length * 19) {
+	    		y += 20;
+	    		for(Block b : component) {
+	    			b.setY(20);
+	    		}
+    		}
+    	}
     }
-
-    public void setX(int i) {
-        x += i;
+    
+    public boolean checkLoc() {
+    	int checkY = 0;
+    	for(Block b : component) {
+    		checkY = Math.max(checkY, (int)(b.getLoc().getY()) - 80);
+    	}
+    	if(checkY >= Main.map.length * 19) {
+    		return true;
+    	}
+    	return false;
     }
-
-    public void setY(int i) {
-        y += i;
+    
+    public void rotate() {
+    	if(orientation < 4) {
+    		orientation++;
+    	}else {
+    		orientation = 1;
+    	}
+    }
+    
+    public Block[] getComponent() {
+    	return component;
+    }
+    
+    public int getOrientation() {
+    	return orientation;
+    }
+    
+    public Point getLoc() {
+    	return new Point(x, y);
     }
 }
