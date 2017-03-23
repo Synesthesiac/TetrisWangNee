@@ -1,5 +1,4 @@
 public class TShape extends Shape {
-	
     public TShape(int xx, int yy) {
         super(xx, yy, 1);
         getComponent()[0] = new Block(xx, yy);

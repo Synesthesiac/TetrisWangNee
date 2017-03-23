@@ -7,6 +7,9 @@ import java.util.Arrays;
 public class Main extends JPanel {
     static final int FRAMEWIDTH = 801, FRAMEHEIGHT = 800;
     static final int[][] map = new int[30][20];
+    static final Rectangle LEFTBOUND = new Rectangle(20, 0, 80, FRAMEHEIGHT);
+    static final Rectangle RIGHTBOUND = new Rectangle(460, 0, 80, FRAMEHEIGHT);
+    static final Rectangle BOTTOMBOUND = new Rectangle(0, 660, FRAMEWIDTH, 80);
     static Block[][] fill = new Block[30][20];
     static final int blockSize = 20;
     private Timer timer;
@@ -32,7 +35,7 @@ public class Main extends JPanel {
             		addedPiece();
             		removeRows();
             		curr = newShape();
-            		viewMap();
+//            		viewMap();
             	}else {
             		curr.update("DOWN");
             	}

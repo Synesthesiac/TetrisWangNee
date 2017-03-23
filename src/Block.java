@@ -11,6 +11,18 @@ public class Block {
         g2.setColor(Color.BLACK);
         g2.fillRect(x, y, 20, 20);
     }
+
+    public boolean intersects(Shape s) {
+        for(int i = 0; i < s.component.length; i++) {
+            Block b = s.component[i];
+            Rectangle a = new Rectangle(b.x, b.y+20, 20, 20);
+            Rectangle c = new Rectangle(x, y, 20, 20);
+            if(c.intersects(a)) {
+                return true;
+            }
+        }
+        return false;
+    }
     
     @Override
     public String toString() {

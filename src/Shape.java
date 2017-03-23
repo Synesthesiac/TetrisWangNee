@@ -18,35 +18,22 @@ public class Shape {
     }
 
     public void update(String dir) {
-    	int checkX, checkY;
     	if(dir.equals("RIGHT")) {
-    		checkX = 0;
-    		for(Block b : component) {
-    			checkX = Math.max(checkX, (int)(b.getLoc().getX()) - 80);
-    		}
-    		if(checkX < Main.map[0].length * 19) {
+    		if(!checkSides()) {
 	    		x += 20;
 	    		for(Block b : component) {
 	    			b.setX(20);
 	    		}
     		}
     	}else if(dir.equals("LEFT")) {
-    		checkX = Integer.MAX_VALUE;
-    		for(Block b : component) {
-    			checkX = Math.min(checkX, (int)(b.getLoc().getX()));
-    		}
-    		if(checkX > 80) {
+    		if(!checkSides()) {
 				x -= 20;
 				for (Block b : component) {
 					b.setX(-20);
 				}
 			}
     	}else {
-    		checkY = 0;
-    		for(Block b : component) {
-    			checkY = Math.max(checkY, (int)(b.getLoc().getY()) - 80);
-    		}
-    		if(checkY < Main.map.length * 19) {
+    		if(!checkIntersect()) {
 	    		y += 20;
 	    		for(Block b : component) {
 	    			b.setY(20);
@@ -54,15 +41,32 @@ public class Shape {
     		}
     	}
     }
+
+    public boolean checkSides() {
+        for(Block b : component) {
+            Rectangle r = new Rectangle(b.getLoc().x, b.getLoc().y, 20, 20);
+            if(r.intersects(Main.LEFTBOUND) || r.intersects(Main.RIGHTBOUND)) {
+                return true;
+            }
+        }
+        return false;
+    }
     
-    public boolean checkLoc() {
-    	int checkY = 0;
-    	for(Block b : component) {
-    		checkY = Math.max(checkY, (int)(b.getLoc().getY()) - 80);
-    	}
-    	if(checkY >= Main.map.length * 19) {
-    		return true;
-    	}
+    public boolean checkIntersect() {
+        for(Block b : component) {
+            Rectangle r = new Rectangle(b.getLoc().x, b.getLoc().y, 20, 20);
+            if(r.intersects(Main.BOTTOMBOUND)) {
+                return true;
+            }
+        }
+
+    	for(int r = 0; r < Main.fill.length; r++) {
+    		for(int c = 0; c < Main.fill[r].length - 1; c++) {
+    		    if(Main.fill[r][c] != null && Main.fill[r][c].intersects(this)) {
+    		        return true;
+                }
+            }
+		}
     	return false;
     }
     
