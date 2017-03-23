@@ -32,7 +32,7 @@ public class Main extends JPanel {
             		addedPiece();
             		removeRows();
             		curr = newShape();
-//            		viewMap();
+            		viewMap();
             	}else {
             		curr.update("DOWN");
             	}
@@ -80,7 +80,6 @@ public class Main extends JPanel {
     	for(int i = 0; i < map.length; i++) {
     		if(checkRows(i)) {
     			reorg(i);
-    			repaint();
     		}
     	}
     }
@@ -89,6 +88,9 @@ public class Main extends JPanel {
     	for(int i = row; i > 0; i--) {
     		for(int j = 0; j < fill[i].length; j++) {
     			Block b = fill[i-1][j];
+                if(b != null) {
+                    b.setY(20);
+                }
     			fill[i][j] = b;
     		}
     		for(int k = 0; k < fill[i-1].length; k++) {
@@ -121,7 +123,6 @@ public class Main extends JPanel {
             keys[KeyEvent.VK_W] = false;
         }else if(keys[KeyEvent.VK_S]) {
         	curr.update("DOWN");
-            keys[KeyEvent.VK_S] = false;
         }else if(keys[KeyEvent.VK_D]) {
         	curr.update("RIGHT");
             keys[KeyEvent.VK_D] = false;
