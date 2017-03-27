@@ -1,15 +1,15 @@
 public class TShape extends Shape {
     public TShape(int xx, int yy) {
-        super(xx, yy, 1);
-        getComponent()[0] = new Block(xx, yy);
-        getComponent()[1] = new Block(xx-20, yy+20);
-        getComponent()[2] = new Block(xx, yy+20);
-        getComponent()[3] = new Block(xx+20, yy+20);
+        super(xx, yy);
+        component[0] = new Block(xx, yy);
+        component[1] = new Block(xx-20, yy+20);
+        component[2] = new Block(xx, yy+20);
+        component[3] = new Block(xx+20, yy+20);
     }
     
     @Override
-    public void update(String dir) {
-    	super.update(dir);
+    public void update(int dir) {
+        super.update(dir);
     }
 
     public void rotate() {

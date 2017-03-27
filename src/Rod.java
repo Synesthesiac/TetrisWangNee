@@ -1,7 +1,11 @@
 
 public class Rod extends Shape {
     public Rod(int xx, int yy) {
-        super(xx, yy, 1);
+        super(xx, yy);
+    }
+
+    public void update(int dir) {
+        super.update(dir);
     }
 
     public void build() {

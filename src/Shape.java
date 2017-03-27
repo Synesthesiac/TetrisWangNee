@@ -1,12 +1,16 @@
 import java.awt.*;
 
 public class Shape {
+    public static final int SOUTH = 270, WEST = 180, EAST = 0;
+
     Block[] component = new Block[4];
     int orientation, x, y;
-    public Shape(int xx, int yy, int o) {
+    int checkL = Integer.MAX_VALUE, checkR, checkB;
+
+    public Shape(int xx, int yy) {
         x = xx;
         y = yy;
-        orientation = o;
+        orientation = 1;
     }
 
     public void draw(Graphics2D g2) {
@@ -17,57 +21,52 @@ public class Shape {
         }
     }
 
-    public void update(String dir) {
-    	if(dir.equals("RIGHT")) {
-    		if(!checkSides()) {
-	    		x += 20;
-	    		for(Block b : component) {
-	    			b.setX(20);
-	    		}
-    		}
-    	}else if(dir.equals("LEFT")) {
-    		if(!checkSides()) {
-				x -= 20;
-				for (Block b : component) {
-					b.setX(-20);
-				}
-			}
-    	}else {
-    		if(!checkIntersect()) {
-	    		y += 20;
-	    		for(Block b : component) {
-	    			b.setY(20);
-	    		}
-    		}
-    	}
+    public void update(int dir) {
+        if(dir == WEST && !hitBounds(WEST)) {
+            x -= 20;
+            for(Block b : component) {
+                b.update(WEST);
+            }
+        }else if(dir == EAST && !hitBounds(EAST)) {
+            x += 20;
+            for(Block b : component) {
+                b.update(EAST);
+            }
+        }else if(dir == SOUTH && !hitBounds(SOUTH)) {
+            y += 20;
+            for(Block b : component) {
+                b.update(SOUTH);
+            }
+        }
     }
 
-    public boolean checkSides() {
-        for(Block b : component) {
-            Rectangle r = new Rectangle(b.getLoc().x, b.getLoc().y, 20, 20);
-            if(r.intersects(Main.LEFTBOUND) || r.intersects(Main.RIGHTBOUND)) {
+    public boolean hitBounds(int dir) {
+        setPolars();
+        if(dir == WEST) {
+            if(checkL <= 80) {
+                return true;
+            }
+        }else if(dir == EAST) {
+            if(checkR >= 480) {
+                return true;
+            }
+        }else if(dir == SOUTH) {
+            if(checkB >= 680) {
                 return true;
             }
         }
         return false;
     }
-    
-    public boolean checkIntersect() {
-        for(Block b : component) {
-            Rectangle r = new Rectangle(b.getLoc().x, b.getLoc().y, 20, 20);
-            if(r.intersects(Main.BOTTOMBOUND)) {
-                return true;
-            }
-        }
 
-    	for(int r = 0; r < Main.fill.length; r++) {
-    		for(int c = 0; c < Main.fill[r].length - 1; c++) {
-    		    if(Main.fill[r][c] != null && Main.fill[r][c].intersects(this)) {
-    		        return true;
-                }
-            }
-		}
-    	return false;
+    public void setPolars() {
+        checkL = Integer.MAX_VALUE;
+        checkR = 0;
+        checkB = 0;
+        for(Block b : component) {
+            checkL = Math.min(checkL, b.getLoc().x);
+            checkR = Math.max(checkR, b.getLoc().x+20);
+            checkB = Math.max(checkB, b.getLoc().y+20);
+        }
     }
     
     public void rotate() {

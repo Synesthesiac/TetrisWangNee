@@ -5,13 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main extends JPanel {
-    static final int FRAMEWIDTH = 801, FRAMEHEIGHT = 800;
+    static final int FRAMEWIDTH = 800, FRAMEHEIGHT = 800;
     static final int[][] map = new int[30][20];
-    static final Rectangle LEFTBOUND = new Rectangle(20, 0, 80, FRAMEHEIGHT);
-    static final Rectangle RIGHTBOUND = new Rectangle(460, 0, 80, FRAMEHEIGHT);
-    static final Rectangle BOTTOMBOUND = new Rectangle(0, 660, FRAMEWIDTH, 80);
     static Block[][] fill = new Block[30][20];
-    static final int blockSize = 20;
     private Timer timer;
     static boolean[] keys;
 
@@ -31,13 +27,14 @@ public class Main extends JPanel {
         timer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	if(curr.checkIntersect()) {
+                System.out.println(curr.checkL);
+                if(curr.hitBounds(Shape.SOUTH)) {
             		addedPiece();
             		removeRows();
             		curr = newShape();
 //            		viewMap();
             	}else {
-            		curr.update("DOWN");
+            		curr.update(Shape.SOUTH);
             	}
             }
         });
@@ -92,7 +89,7 @@ public class Main extends JPanel {
     		for(int j = 0; j < fill[i].length; j++) {
     			Block b = fill[i-1][j];
                 if(b != null) {
-                    b.setY(20);
+                    b.update(Shape.SOUTH);
                 }
     			fill[i][j] = b;
     		}
@@ -119,15 +116,15 @@ public class Main extends JPanel {
 
     public void controls() {
         if(keys[KeyEvent.VK_A]) {
-        	curr.update("LEFT");
+        	curr.update(Shape.WEST);
             keys[KeyEvent.VK_A] = false;
         }else if(keys[KeyEvent.VK_W]) {
         	curr.rotate();
             keys[KeyEvent.VK_W] = false;
         }else if(keys[KeyEvent.VK_S]) {
-        	curr.update("DOWN");
+        	curr.update(Shape.SOUTH);
         }else if(keys[KeyEvent.VK_D]) {
-        	curr.update("RIGHT");
+        	curr.update(Shape.EAST);
             keys[KeyEvent.VK_D] = false;
         }else if(keys[KeyEvent.VK_ESCAPE]) {
         	System.exit(0);
@@ -153,7 +150,7 @@ public class Main extends JPanel {
         g2.setColor(Color.BLACK);
         for(int r = 0; r < map.length; r++) {
             for(int c = 0; c < map[r].length; c++) {
-                g2.drawRect(c*blockSize + 80, r*blockSize + 80, blockSize, blockSize);
+                g2.drawRect(c*20 + 80, r*20 + 80, 20, 20);
             }
         }
         

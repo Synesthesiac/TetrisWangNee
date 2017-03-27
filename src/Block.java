@@ -12,29 +12,19 @@ public class Block {
         g2.fillRect(x, y, 20, 20);
     }
 
-    public boolean intersects(Shape s) {
-        for(int i = 0; i < s.component.length; i++) {
-            Block b = s.component[i];
-            Rectangle a = new Rectangle(b.x, b.y+20, 20, 20);
-            Rectangle c = new Rectangle(x, y, 20, 20);
-            if(c.intersects(a)) {
-                return true;
-            }
+    public void update(int dir) {
+        if(dir == Shape.WEST) {
+            x -= 20;
+        }else if(dir == Shape.EAST) {
+            x += 20;
+        }else if(dir == Shape.SOUTH) {
+            y += 20;
         }
-        return false;
     }
     
     @Override
     public String toString() {
     	return "X";
-    }
-    
-    public void setX(int i) {
-    	x += i;
-    }
-    
-    public void setY(int i) {
-    	y += i;
     }
     
     public Point getLoc() {
