@@ -31,7 +31,7 @@ public class Main extends JPanel {
         timer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	if(curr.checkLoc()) {
+            	if(curr.checkIntersect()) {
             		addedPiece();
             		removeRows();
             		curr = newShape();
