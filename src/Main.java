@@ -27,7 +27,7 @@ public class Main extends JPanel {
         timer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(curr.checkL);
+//                System.out.println(curr.checkL);
                 if(curr.hitBounds(Shape.SOUTH)) {
             		addedPiece();
             		removeRows();
