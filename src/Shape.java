@@ -22,17 +22,17 @@ public class Shape {
     }
 
     public void update(int dir) {
-        if(dir == WEST && !hitBounds(WEST)) {
+        if(dir == WEST) {
             x -= 20;
             for(Block b : component) {
                 b.update(WEST);
             }
-        }else if(dir == EAST && !hitBounds(EAST)) {
+        }else if(dir == EAST) {
             x += 20;
             for(Block b : component) {
                 b.update(EAST);
             }
-        }else if(dir == SOUTH && !hitBounds(SOUTH)) {
+        }else if(dir == SOUTH) {
             y += 20;
             for(Block b : component) {
                 b.update(SOUTH);
@@ -67,14 +67,31 @@ public class Shape {
             checkR = Math.max(checkR, b.getLoc().x+20);
             checkB = Math.max(checkB, b.getLoc().y+20);
         }
+        System.out.println(checkL + ", " + checkR + ", " + checkB);
     }
     
     public void rotate() {
-    	if(orientation < 4) {
-    		orientation++;
-    	}else {
-    		orientation = 1;
-    	}
+        if(orientation < 4) {
+            orientation++;
+        }else {
+            orientation = 1;
+        }
+        setPolars();
+        while(checkL < 80) {
+            update(EAST);
+            setPolars();
+        }
+        while(checkR > 480) {
+            update(WEST);
+            setPolars();
+        }
+        while(checkB > 680) {
+            y -= 20;
+            for(Block b : component) {
+                b.setY(-20);
+            }
+            setPolars();
+        }
     }
     
     public Block[] getComponent() {

@@ -14,7 +14,7 @@ public class Main extends JPanel {
     private static Shape curr;
     public Main() {
         keys = new boolean[512];
-        curr = new TShape(15*20, 100);
+        curr = new TShape(15*20, 100, 1);
         timer = new Timer(40, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -73,7 +73,7 @@ public class Main extends JPanel {
     }
     
     public Shape newShape() {
-    	return new TShape(15*20, 100);
+    	return new TShape(15*20, 100, 1);
     }
     
     public void removeRows() {
@@ -115,15 +115,15 @@ public class Main extends JPanel {
     }
 
     public void controls() {
-        if(keys[KeyEvent.VK_A]) {
+        if(keys[KeyEvent.VK_A] && !curr.hitBounds(Shape.WEST)) {
         	curr.update(Shape.WEST);
             keys[KeyEvent.VK_A] = false;
         }else if(keys[KeyEvent.VK_W]) {
         	curr.rotate();
             keys[KeyEvent.VK_W] = false;
-        }else if(keys[KeyEvent.VK_S]) {
+        }else if(keys[KeyEvent.VK_S] && !curr.hitBounds(Shape.SOUTH)) {
         	curr.update(Shape.SOUTH);
-        }else if(keys[KeyEvent.VK_D]) {
+        }else if(keys[KeyEvent.VK_D] && !curr.hitBounds(Shape.EAST)) {
         	curr.update(Shape.EAST);
             keys[KeyEvent.VK_D] = false;
         }else if(keys[KeyEvent.VK_ESCAPE]) {

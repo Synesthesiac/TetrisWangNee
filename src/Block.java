@@ -26,6 +26,10 @@ public class Block {
     public String toString() {
     	return "X";
     }
+
+    public void setY(int i) {
+        y += i;
+    }
     
     public Point getLoc() {
     	return new Point(x, y);
