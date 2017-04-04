@@ -14,7 +14,7 @@ public class Main extends JPanel {
     private static Shape curr;
     public Main() {
         keys = new boolean[512];
-        curr = new TShape(15*20, 100, 1);
+        curr = new RightL(15*20, 100, 1);
         timer = new Timer(40, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

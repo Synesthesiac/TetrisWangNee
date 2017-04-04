@@ -69,7 +69,6 @@ public class Shape {
             checkR = Math.max(checkR, b.getLoc().x+20);
             checkB = Math.max(checkB, b.getLoc().y+20);
         }
-        System.out.println(checkL + ", " + checkR + ", " + checkB);
     }
     
     public void rotate() {
@@ -78,7 +77,7 @@ public class Shape {
         }else {
             orientation = 1;
         }
-        build(getOrientation());
+        build(orientation);
         adjustEdge();
     }
 

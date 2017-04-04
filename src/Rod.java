@@ -1,14 +1,17 @@
 
 public class Rod extends Shape {
-    public Rod(int xx, int yy) {
+    public Rod(int xx, int yy, int o) {
         super(xx, yy);
+        build(o);
     }
 
+    @Override
     public void update(int dir) {
         super.update(dir);
     }
 
-    public void build() {
+    @Override
+    public void build(int orientation) {
         if(orientation == 1) {
             component[0] = new Block(x, y);
             component[1] = new Block(x, y+20);
@@ -30,5 +33,9 @@ public class Rod extends Shape {
             component[2] = new Block(x+40, y);
             component[3] = new Block(x+60, y);
         }
+    }
+
+    public void rotate() {
+        super.rotate();
     }
 }
