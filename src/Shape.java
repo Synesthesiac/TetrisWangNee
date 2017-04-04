@@ -42,6 +42,33 @@ public class Shape {
         }
     }
 
+    public boolean hitShape(int dir) {
+        for(Block b : Main.map) {
+            for(Block a : component) {
+                if(dir == WEST) {
+                    Rectangle r1 = new Rectangle(a.getLoc().x - 20, a.getLoc().y, 20, 20);
+                    Rectangle r2 = new Rectangle(b.getLoc().x, b.getLoc().y, 20, 20);
+                    if(r1.intersects(r2)) {
+                        return true;
+                    }
+                }else if(dir == EAST) {
+                    Rectangle r1 = new Rectangle(a.getLoc().x + 20, a.getLoc().y, 20, 20);
+                    Rectangle r2 = new Rectangle(b.getLoc().x, b.getLoc().y, 20, 20);
+                    if (r1.intersects(r2)) {
+                        return true;
+                    }
+                }else if(dir == SOUTH) {
+                    Rectangle r1 = new Rectangle(a.getLoc().x, a.getLoc().y+20, 20, 20);
+                    Rectangle r2 = new Rectangle(b.getLoc().x, b.getLoc().y, 20, 20);
+                    if(r1.intersects(r2)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean hitBounds(int dir) {
         setPolars();
         if(dir == WEST) {
