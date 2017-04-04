@@ -9,6 +9,7 @@ public class TShape extends Shape {
         super.update(dir);
     }
 
+    @Override
     public void build(int orientation) {
         /*  1       2      4         3
             x       x      x
@@ -40,6 +41,5 @@ public class TShape extends Shape {
 
     public void rotate() {
     	super.rotate();
-        build(getOrientation());
     }
 }

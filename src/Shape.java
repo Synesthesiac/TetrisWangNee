@@ -21,6 +21,8 @@ public class Shape {
         }
     }
 
+    public void build(int orientation){}
+
     public void update(int dir) {
         if(dir == WEST) {
             x -= 20;
@@ -76,6 +78,11 @@ public class Shape {
         }else {
             orientation = 1;
         }
+        build(getOrientation());
+        adjustEdge();
+    }
+
+    public void adjustEdge() {
         setPolars();
         while(checkL < 80) {
             update(EAST);
