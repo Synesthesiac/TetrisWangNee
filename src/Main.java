@@ -10,8 +10,7 @@ public class Main extends JPanel {
     private Timer timer;
     static boolean[] keys;
     static ArrayList<Block> map = new ArrayList<>();
-
-    final static Shape[] poss = new Shape[] {new TShape(15*20, 100, 1), new Rod(15*20, 100, 1), new RightL(15*20, 100, 1), new Square(15*20, 100, 1)};
+    static int state = 1;
 
     private static Shape curr;
     public Main() {
@@ -20,7 +19,10 @@ public class Main extends JPanel {
         timer = new Timer(40, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controls();
+                System.out.println(state);
+                if(state == 1) {
+                    controls();
+                }
                 repaint();
             }
         });
@@ -30,14 +32,18 @@ public class Main extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
 //                System.out.println(curr.checkL);
-                if(curr.hitBounds(Shape.SOUTH) || curr.hitShape(Shape.SOUTH)) {
-            		addedPiece();
-            		removeRows();
-            		curr = newShape();
-//            		viewMap();
-            	}else {
-            		curr.update(Shape.SOUTH);
-            	}
+                if(state == 1) {
+                    if((curr.hitBounds(Shape.SOUTH) || curr.hitShape(Shape.SOUTH)) && curr.toppedOut()) {
+                        state++;
+                    }else if ((curr.hitBounds(Shape.SOUTH) || curr.hitShape(Shape.SOUTH)) && !curr.toppedOut()) {
+                        addedPiece();
+                        removeRows();
+                        curr = newShape();
+                        viewMap();
+                    } else {
+                        curr.update(Shape.SOUTH);
+                    }
+                }
             }
         });
         timer.start();
@@ -60,22 +66,30 @@ public class Main extends JPanel {
     }
     
     public void viewMap() {
-    	for(Block[] b : fill) {
-    		String strt = "[";
-    		for(int i = 0; i < b.length; i++) {
-    			if(b[i] != null) {
-    				strt += b[i].toString() + ", ";
-    			}else {
-    				strt += "O, ";
-    			}
-    		}
-    		strt += "]";
-    		System.out.println(strt);
-    	}
+    	for(int r = 0; r < fill.length; r++) {
+    	    for(int c = 0; c < fill[r].length; c++) {
+    	        if(fill[r][c] != null) {
+                    System.out.print(fill[r][c].toString());
+                }else {
+                    System.out.print("O");
+                }
+            }
+            System.out.println();
+        }
     }
     
     public Shape newShape() {
-    	return poss[(int)(Math.random()*poss.length)];
+    	int rando = (int)(Math.random() * 4) + 1;
+        if(rando == 1) {
+            return new TShape(180, 60, 1);
+        }else if(rando == 2) {
+            return new Rod(380, 60, 1);
+        }else if(rando == 3) {
+            return new Square(380, 60, 1);
+        }else if(rando == 4) {
+            return new RightL(380, 100, 1);
+        }
+        return new TShape(0, 0, 1);
     }
     
     public void removeRows() {
@@ -94,6 +108,7 @@ public class Main extends JPanel {
                     b.update(Shape.SOUTH);
                 }
     			fill[i][j] = b;
+                fill[i-1][j] = null;
     		}
     		for(int k = 0; k < fill[i-1].length; k++) {
 				fill[i-1][k] = null;
@@ -145,26 +160,30 @@ public class Main extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        
-        g2.setColor(Color.WHITE);
-        g2.fillRect(0, 0, FRAMEWIDTH, FRAMEHEIGHT);
-        
-        //MAP GRID
-        g2.setColor(Color.BLACK);
-        for(int r = 0; r < fill.length; r++) {
-            for(int c = 0; c < fill[r].length; c++) {
-                g2.drawRect(c*20 + 80, r*20 + 80, 20, 20);
-            }
-        }
-        
-        curr.draw(g2);
+        if(state == 1) {
+            g2.setColor(Color.WHITE);
+            g2.fillRect(0, 0, FRAMEWIDTH, FRAMEHEIGHT);
 
-        for(int r = 0; r < fill.length; r++) {
-        	for(int c = 0; c < fill[r].length; c++) {
-        		if(fill[r][c] instanceof Block) {
-        			fill[r][c].draw(g2);
-        		}
-        	}
+            //MAP GRID
+            g2.setColor(Color.BLACK);
+            for (int r = 0; r < fill.length; r++) {
+                for (int c = 0; c < fill[r].length; c++) {
+                    g2.drawRect(c * 20 + 80, r * 20 + 80, 20, 20);
+                }
+            }
+
+            curr.draw(g2);
+
+            for (int r = 0; r < fill.length; r++) {
+                for (int c = 0; c < fill[r].length; c++) {
+                    if (fill[r][c] instanceof Block) {
+                        fill[r][c].draw(g2);
+                    }
+                }
+            }
+        }else if(state == 2) {
+            g2.setColor(Color.WHITE);
+            g2.fillRect(0, 0, FRAMEWIDTH, FRAMEHEIGHT);
         }
     }
 

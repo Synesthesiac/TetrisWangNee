@@ -5,7 +5,7 @@ public class Shape {
 
     Block[] component = new Block[4];
     int orientation, x, y;
-    int checkL = Integer.MAX_VALUE, checkR, checkB;
+    int checkL = Integer.MAX_VALUE, checkR, checkB, checkT = Integer.MAX_VALUE;
 
     public Shape(int xx, int yy) {
         x = xx;
@@ -19,6 +19,13 @@ public class Shape {
                 b.draw(g2);
             }
         }
+    }
+
+    public boolean toppedOut() {
+        if(checkT < 80) {
+            return true;
+        }
+        return false;
     }
 
     public void build(int orientation){}
@@ -43,25 +50,30 @@ public class Shape {
     }
 
     public boolean hitShape(int dir) {
-        for(Block b : Main.map) {
-            for(Block a : component) {
-                if(dir == WEST) {
-                    Rectangle r1 = new Rectangle(a.getLoc().x - 20, a.getLoc().y, 20, 20);
-                    Rectangle r2 = new Rectangle(b.getLoc().x, b.getLoc().y, 20, 20);
-                    if(r1.intersects(r2)) {
-                        return true;
-                    }
-                }else if(dir == EAST) {
-                    Rectangle r1 = new Rectangle(a.getLoc().x + 20, a.getLoc().y, 20, 20);
-                    Rectangle r2 = new Rectangle(b.getLoc().x, b.getLoc().y, 20, 20);
-                    if (r1.intersects(r2)) {
-                        return true;
-                    }
-                }else if(dir == SOUTH) {
-                    Rectangle r1 = new Rectangle(a.getLoc().x, a.getLoc().y+20, 20, 20);
-                    Rectangle r2 = new Rectangle(b.getLoc().x, b.getLoc().y, 20, 20);
-                    if(r1.intersects(r2)) {
-                        return true;
+        for(Block[] t : Main.fill) {
+            for(int i = 0; i < t.length; i++) {
+                if(t[i] != null) {
+                    Block b = t[i];
+                    for (Block a : component) {
+                        if (dir == WEST) {
+                            Rectangle r1 = new Rectangle(a.getLoc().x - 20, a.getLoc().y, 20, 20);
+                            Rectangle r2 = new Rectangle(b.getLoc().x, b.getLoc().y, 20, 20);
+                            if (r1.intersects(r2)) {
+                                return true;
+                            }
+                        } else if (dir == EAST) {
+                            Rectangle r1 = new Rectangle(a.getLoc().x + 20, a.getLoc().y, 20, 20);
+                            Rectangle r2 = new Rectangle(b.getLoc().x, b.getLoc().y, 20, 20);
+                            if (r1.intersects(r2)) {
+                                return true;
+                            }
+                        } else if (dir == SOUTH) {
+                            Rectangle r1 = new Rectangle(a.getLoc().x, a.getLoc().y + 20, 20, 20);
+                            Rectangle r2 = new Rectangle(b.getLoc().x, b.getLoc().y, 20, 20);
+                            if (r1.intersects(r2)) {
+                                return true;
+                            }
+                        }
                     }
                 }
             }
@@ -91,10 +103,12 @@ public class Shape {
         checkL = Integer.MAX_VALUE;
         checkR = 0;
         checkB = 0;
+        checkT = Integer.MAX_VALUE;
         for(Block b : component) {
             checkL = Math.min(checkL, b.getLoc().x);
             checkR = Math.max(checkR, b.getLoc().x+20);
             checkB = Math.max(checkB, b.getLoc().y+20);
+            checkT = Math.min(checkT, b.getLoc().y);
         }
     }
     
