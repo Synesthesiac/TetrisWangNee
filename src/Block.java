@@ -2,13 +2,16 @@ import java.awt.*;
 
 public class Block {
     private int x, y;
-    public Block(int xx, int yy) {
+    Color color;
+    public Block(int xx, int yy, Color c) {
         x = xx;
         y = yy;
+        color = c;
     }
 
     public void draw(Graphics2D g2) {
-        g2.setColor(Color.BLACK);
+        g2.setColor(color);
+        g2.drawRect(x, y, 20, 20);
         g2.fillRect(x, y, 20, 20);
     }
 
@@ -20,6 +23,10 @@ public class Block {
         }else if(dir == Shape.SOUTH) {
             y += 20;
         }
+    }
+
+    public Color getColor() {
+        return color;
     }
     
     @Override

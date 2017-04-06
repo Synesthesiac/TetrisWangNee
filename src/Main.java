@@ -12,6 +12,8 @@ public class Main extends JPanel {
     static ArrayList<Block> map = new ArrayList<>();
     static int state = 1;
 
+    static Color[] colors = new Color[]{Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA};
+
     private static Shape curr;
     private static Shape disp;
 
@@ -70,13 +72,15 @@ public class Main extends JPanel {
 
     public void newPiece() {
         if (disp instanceof TShape) {
-            curr = new TShape(280, 80, 1);
+            curr = new TShape(280, 80, 1, disp.getColor());
         } else if (disp instanceof Rod) {
-            curr = new Rod(280, 80, 1);
+            curr = new Rod(280, 80, 1, disp.getColor());
         } else if (disp instanceof Square) {
-            curr = new Square(280, 80, 1);
+            curr = new Square(280, 80, 1, disp.getColor());
         } else if (disp instanceof RightL) {
-            curr = new RightL(280, 120, 1);
+            curr = new RightL(280, 120, 1, disp.getColor());
+        } else if (disp instanceof LeftL) {
+            curr = new LeftL(280, 120, 1, disp.getColor());
         }
         disp = newShape(2);
     }
@@ -95,29 +99,34 @@ public class Main extends JPanel {
     }
     
     public Shape newShape(int t) {
-        int rando = (int) (Math.random() * 4) + 1;
+        int rando = (int) (Math.random() * 5) + 1;
+        Color c = colors[(int)(Math.random() * 6)];
         if(t == 1) {
             if (rando == 1) {
-                return new TShape(280, 80, 1);
+                return new TShape(280, 80, 1, c);
             } else if (rando == 2) {
-                return new Rod(280, 80, 1);
+                return new Rod(280, 80, 1, c);
             } else if (rando == 3) {
-                return new Square(280, 80, 1);
+                return new Square(280, 80, 1, c);
             } else if (rando == 4) {
-                return new RightL(280, 120, 1);
+                return new RightL(280, 120, 1, c);
+            } else if (rando == 5) {
+                return new LeftL(280, 120, 1, c);
             }
         }else if(t == 2) {
             if (rando == 1) {
-                return new TShape(610, 160, 1);
+                return new TShape(610, 160, 1, c);
             } else if (rando == 2) {
-                return new Rod(610, 140, 1);
+                return new Rod(610, 140, 1, c);
             } else if (rando == 3) {
-                return new Square(600, 160, 1);
+                return new Square(600, 160, 1, c);
             } else if (rando == 4) {
-                return new RightL(630, 180, 1);
+                return new RightL(630, 180, 1, c);
+            } else if(rando == 5) {
+                return new LeftL(630, 180, 1, c);
             }
         }
-        return new TShape(0, 0, 1);
+        return new TShape(0, 0, 1, Color.BLACK);
     }
     
     public void removeRows() {
@@ -180,7 +189,7 @@ public class Main extends JPanel {
     	for(Block b : curr.getComponent()) {
     		Point p = b.getLoc();
 //    		System.out.println("X: " + (int)(p.getX()/20) + ", Y: " + (int)(p.getY()/20));
-    		fill[(int)((p.getY() - 80)/20)][(int)((p.getX() - 80)/20)] = new Block(p.x, p.y);
+    		fill[(int)((p.getY() - 80)/20)][(int)((p.getX() - 80)/20)] = new Block(p.x, p.y, b.getColor());
             map.add(b);
     	}
     }
@@ -212,6 +221,8 @@ public class Main extends JPanel {
 
             //Sidebar
             disp.draw(g2);
+            g2.setColor(Color.BLACK);
+            g2.drawString("NEXT SHAPE", 580, 100);
             g2.drawRect(520, 80, 200, 200);
 
         }else if(state == 2) {

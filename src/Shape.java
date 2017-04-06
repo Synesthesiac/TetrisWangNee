@@ -6,10 +6,12 @@ public class Shape {
     Block[] component = new Block[4];
     int orientation, x, y;
     int checkL = Integer.MAX_VALUE, checkR, checkB, checkT = Integer.MAX_VALUE;
+    Color c;
 
-    public Shape(int xx, int yy) {
+    public Shape(int xx, int yy, Color color) {
         x = xx;
         y = yy;
+        c = color;
         orientation = 1;
     }
 
@@ -28,7 +30,7 @@ public class Shape {
         return false;
     }
 
-    public void build(int orientation){}
+    public void build(int orientation, Color c){}
 
     public void update(int dir) {
         if(dir == WEST) {
@@ -118,7 +120,7 @@ public class Shape {
         }else {
             orientation = 1;
         }
-        build(orientation);
+        build(orientation, c);
         adjustEdge();
     }
 
@@ -139,6 +141,10 @@ public class Shape {
             }
             setPolars();
         }
+    }
+
+    public Color getColor() {
+        return c;
     }
     
     public Block[] getComponent() {
