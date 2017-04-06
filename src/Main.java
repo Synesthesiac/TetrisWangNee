@@ -13,13 +13,16 @@ public class Main extends JPanel {
     static int state = 1;
 
     private static Shape curr;
+    private static Shape disp;
+
     public Main() {
         keys = new boolean[512];
-        curr = newShape();
+        curr = newShape(1);
+        disp = newShape(2);
         timer = new Timer(40, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(state);
+//                System.out.println(state);
                 if(state == 1) {
                     controls();
                 }
@@ -38,7 +41,7 @@ public class Main extends JPanel {
                     }else if ((curr.hitBounds(Shape.SOUTH) || curr.hitShape(Shape.SOUTH)) && !curr.toppedOut()) {
                         addedPiece();
                         removeRows();
-                        curr = newShape();
+                        newPiece();
                         viewMap();
                     } else {
                         curr.update(Shape.SOUTH);
@@ -64,6 +67,19 @@ public class Main extends JPanel {
             }
         });
     }
+
+    public void newPiece() {
+        if (disp instanceof TShape) {
+            curr = new TShape(280, 80, 1);
+        } else if (disp instanceof Rod) {
+            curr = new Rod(280, 80, 1);
+        } else if (disp instanceof Square) {
+            curr = new Square(280, 80, 1);
+        } else if (disp instanceof RightL) {
+            curr = new RightL(280, 120, 1);
+        }
+        disp = newShape(2);
+    }
     
     public void viewMap() {
     	for(int r = 0; r < fill.length; r++) {
@@ -78,16 +94,28 @@ public class Main extends JPanel {
         }
     }
     
-    public Shape newShape() {
-    	int rando = (int)(Math.random() * 4) + 1;
-        if(rando == 1) {
-            return new TShape(180, 60, 1);
-        }else if(rando == 2) {
-            return new Rod(380, 60, 1);
-        }else if(rando == 3) {
-            return new Square(380, 60, 1);
-        }else if(rando == 4) {
-            return new RightL(380, 100, 1);
+    public Shape newShape(int t) {
+        int rando = (int) (Math.random() * 4) + 1;
+        if(t == 1) {
+            if (rando == 1) {
+                return new TShape(280, 80, 1);
+            } else if (rando == 2) {
+                return new Rod(280, 80, 1);
+            } else if (rando == 3) {
+                return new Square(280, 80, 1);
+            } else if (rando == 4) {
+                return new RightL(280, 120, 1);
+            }
+        }else if(t == 2) {
+            if (rando == 1) {
+                return new TShape(610, 160, 1);
+            } else if (rando == 2) {
+                return new Rod(610, 140, 1);
+            } else if (rando == 3) {
+                return new Square(600, 160, 1);
+            } else if (rando == 4) {
+                return new RightL(630, 180, 1);
+            }
         }
         return new TShape(0, 0, 1);
     }
@@ -164,7 +192,7 @@ public class Main extends JPanel {
             g2.setColor(Color.WHITE);
             g2.fillRect(0, 0, FRAMEWIDTH, FRAMEHEIGHT);
 
-            //MAP GRID
+            //Actual Map
             g2.setColor(Color.BLACK);
             for (int r = 0; r < fill.length; r++) {
                 for (int c = 0; c < fill[r].length; c++) {
@@ -181,6 +209,11 @@ public class Main extends JPanel {
                     }
                 }
             }
+
+            //Sidebar
+            disp.draw(g2);
+            g2.drawRect(520, 80, 200, 200);
+
         }else if(state == 2) {
             g2.setColor(Color.WHITE);
             g2.fillRect(0, 0, FRAMEWIDTH, FRAMEHEIGHT);

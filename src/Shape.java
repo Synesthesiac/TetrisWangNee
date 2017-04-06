@@ -22,7 +22,7 @@ public class Shape {
     }
 
     public boolean toppedOut() {
-        if(checkT < 80) {
+        if(checkT < 100) {
             return true;
         }
         return false;
