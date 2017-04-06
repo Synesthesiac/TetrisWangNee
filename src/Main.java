@@ -11,10 +11,12 @@ public class Main extends JPanel {
     static boolean[] keys;
     static ArrayList<Block> map = new ArrayList<>();
 
+    final static Shape[] poss = new Shape[] {new TShape(15*20, 100, 1), new Rod(15*20, 100, 1), new RightL(15*20, 100, 1), new Square(15*20, 100, 1)};
+
     private static Shape curr;
     public Main() {
         keys = new boolean[512];
-        curr = new TShape(15*20, 100, 1);
+        curr = newShape();
         timer = new Timer(40, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -73,7 +75,7 @@ public class Main extends JPanel {
     }
     
     public Shape newShape() {
-    	return new TShape(15*20, 100, 1);
+    	return poss[(int)(Math.random()*poss.length)];
     }
     
     public void removeRows() {
@@ -156,9 +158,10 @@ public class Main extends JPanel {
         }
         
         curr.draw(g2);
+
         for(int r = 0; r < fill.length; r++) {
         	for(int c = 0; c < fill[r].length; c++) {
-        		if(fill[r][c] != null) {
+        		if(fill[r][c] instanceof Block) {
         			fill[r][c].draw(g2);
         		}
         	}

@@ -13,7 +13,4 @@ public class Square extends Shape {
         component[3] = new Block(x+20, y+20);
     }
 
-    public void rotate() {
-        super.rotate();
-    }
 }

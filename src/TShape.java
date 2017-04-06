@@ -3,11 +3,6 @@ public class TShape extends Shape {
         super(xx, yy);
         build(o);
     }
-    
-    @Override
-    public void update(int dir) {
-        super.update(dir);
-    }
 
     @Override
     public void build(int orientation) {
@@ -37,9 +32,5 @@ public class TShape extends Shape {
             component[2] = new Block(x-20, y-20);
             component[3] = new Block(x-20, y+20);
         }
-    }
-
-    public void rotate() {
-    	super.rotate();
     }
 }

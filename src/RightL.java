@@ -29,4 +29,5 @@ public class RightL extends Shape {
             component[3] = new Block(x-40, y+20);
         }
     }
+
 }

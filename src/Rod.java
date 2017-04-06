@@ -6,11 +6,6 @@ public class Rod extends Shape {
     }
 
     @Override
-    public void update(int dir) {
-        super.update(dir);
-    }
-
-    @Override
     public void build(int orientation) {
         if(orientation == 1) {
             component[0] = new Block(x, y);
@@ -35,7 +30,4 @@ public class Rod extends Shape {
         }
     }
 
-    public void rotate() {
-        super.rotate();
-    }
 }
