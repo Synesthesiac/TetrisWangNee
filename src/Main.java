@@ -81,6 +81,8 @@ public class Main extends JPanel {
             curr = new RightL(280, 120, 1, disp.getColor());
         } else if (disp instanceof LeftL) {
             curr = new LeftL(280, 120, 1, disp.getColor());
+        } else if (disp instanceof ZigZagR) {
+            curr = new ZigZagR(280, 120, 1, disp.getColor());
         }
         disp = newShape(2);
     }
@@ -99,7 +101,7 @@ public class Main extends JPanel {
     }
     
     public Shape newShape(int t) {
-        int rando = (int) (Math.random() * 5) + 1;
+        int rando = (int) (Math.random() * 6) + 1;
         Color c = colors[(int)(Math.random() * 6)];
         if(t == 1) {
             if (rando == 1) {
@@ -112,6 +114,8 @@ public class Main extends JPanel {
                 return new RightL(280, 120, 1, c);
             } else if (rando == 5) {
                 return new LeftL(280, 120, 1, c);
+            } else if (rando == 6) {
+                return new ZigZagR(280, 120, 1, c);
             }
         }else if(t == 2) {
             if (rando == 1) {
@@ -124,6 +128,8 @@ public class Main extends JPanel {
                 return new RightL(630, 180, 1, c);
             } else if(rando == 5) {
                 return new LeftL(630, 180, 1, c);
+            }else if (rando == 6) {
+                return new ZigZagR(630, 180, 1, c);
             }
         }
         return new TShape(0, 0, 1, Color.BLACK);
