@@ -8,6 +8,7 @@ public class Main extends JPanel {
     static final int FRAMEWIDTH = 800, FRAMEHEIGHT = 800;
     static Block[][] fill = new Block[30][20];
     private Timer timer;
+    private Timer timer2;
     static boolean[] keys;
     static ArrayList<Block> map = new ArrayList<>();
     static int state = 1;
@@ -28,7 +29,7 @@ public class Main extends JPanel {
         keys = new boolean[512];
         curr = newShape(1);
         disp = newShape(2);
-        timer = new Timer(40, new ActionListener() {
+        timer2 = new Timer(40, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 //                System.out.println(state);
@@ -38,7 +39,7 @@ public class Main extends JPanel {
                 repaint();
             }
         });
-        timer.start();
+        timer2.start();
 
         timer = new Timer(delay, new ActionListener() {
             @Override
@@ -54,8 +55,8 @@ public class Main extends JPanel {
                     } else {
                         curr.update(Shape.SOUTH);
                     }
-                    if(score >= 1000*level){
-                       delay =- 20;
+                    if(score >= 500*level){
+                       delay -= 25;
                         timer.setDelay(delay);
                         level++;
                     }
@@ -162,7 +163,7 @@ public class Main extends JPanel {
     		}
     	}
     	if(numRemoved > 0) {
-            score += 100 * Math.pow(2, numRemoved - 1);
+            score += 100 * Math.pow(2, numRemoved);
         }
     }
     
