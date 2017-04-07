@@ -115,9 +115,9 @@ public class Shape {
     }
     
     public void rotate() {
-        if(orientation < 4) {
+        if (orientation < 4) {
             orientation++;
-        }else {
+        } else {
             orientation = 1;
         }
         build(orientation, c);
@@ -126,15 +126,15 @@ public class Shape {
 
     public void adjustEdge() {
         setPolars();
-        while(checkL < 80) {
+        while(checkL < 80 || hitShape(WEST)) {
             update(EAST);
             setPolars();
         }
-        while(checkR > 480) {
+        while(checkR > 480 || hitShape(EAST)) {
             update(WEST);
             setPolars();
         }
-        while(checkB > 680) {
+        while(checkB > 680 || hitShape(SOUTH)) {
             y -= 20;
             for(Block b : component) {
                 b.setY(-20);
