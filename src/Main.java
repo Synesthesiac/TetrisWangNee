@@ -57,6 +57,7 @@ public class Main extends JPanel {
                     if(score >= 1000*level){
                        delay =- 20;
                         timer.setDelay(delay);
+                        level++;
                     }
                 }
             }
@@ -260,7 +261,7 @@ public class Main extends JPanel {
             g2.fillRect(0, 0, FRAMEWIDTH, FRAMEHEIGHT);
             g2.setColor(Color.BLACK);
             g2.drawString("Score:" + score, 350,380);
-            g2.drawString("You Suck. Made by the Glorious Andy Wang and his sidekick Daniel Nee", 250,400);
+            g2.drawString("You Suck. Made by the Glorious Andy Wang and his sidekick Daniel Nee", 200,400);
         }
     }
 
