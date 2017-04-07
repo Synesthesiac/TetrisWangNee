@@ -16,8 +16,15 @@ public class Main extends JPanel {
 
     private static Shape curr;
     private static Shape disp;
+    private int score;
+    private int delay;
+    private int level;
+
 
     public Main() {
+        score = 0;
+        delay = 500;
+        level = 1;
         keys = new boolean[512];
         curr = newShape(1);
         disp = newShape(2);
@@ -33,7 +40,7 @@ public class Main extends JPanel {
         });
         timer.start();
 
-        timer = new Timer(500, new ActionListener() {
+        timer = new Timer(delay, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 //                System.out.println(curr.checkL);
@@ -46,6 +53,10 @@ public class Main extends JPanel {
                         newPiece();
                     } else {
                         curr.update(Shape.SOUTH);
+                    }
+                    if(score >= 1000*level){
+                       delay =- 20;
+                        timer.setDelay(delay);
                     }
                 }
             }
@@ -142,11 +153,16 @@ public class Main extends JPanel {
     }
     
     public void removeRows() {
+        int numRemoved = 0;
     	for(int i = 0; i < fill.length; i++) {
     		if(checkRows(i)) {
     			reorg(i);
+                numRemoved++;
     		}
     	}
+    	if(numRemoved > 0) {
+            score += 100 * Math.pow(2, numRemoved - 1);
+        }
     }
     
     public void reorg(int row) {
@@ -213,8 +229,10 @@ public class Main extends JPanel {
             g2.setColor(Color.WHITE);
             g2.fillRect(0, 0, FRAMEWIDTH, FRAMEHEIGHT);
 
+
             //Actual Map
             g2.setColor(Color.BLACK);
+            g2.drawString("Score: " + score + " Level: " + level, 80,80);
             for (int r = 0; r < fill.length; r++) {
                 for (int c = 0; c < fill[r].length; c++) {
                     g2.drawRect(c * 20 + 80, r * 20 + 80, 20, 20);
@@ -240,6 +258,9 @@ public class Main extends JPanel {
         }else if(state == 2) {
             g2.setColor(Color.WHITE);
             g2.fillRect(0, 0, FRAMEWIDTH, FRAMEHEIGHT);
+            g2.setColor(Color.BLACK);
+            g2.drawString("Score:" + score, 350,380);
+            g2.drawString("You Suck. Made by the Glorious Daniel Nee with assistance from Andy Wang", 360,400);
         }
     }
 
