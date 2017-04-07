@@ -260,7 +260,7 @@ public class Main extends JPanel {
             g2.fillRect(0, 0, FRAMEWIDTH, FRAMEHEIGHT);
             g2.setColor(Color.BLACK);
             g2.drawString("Score:" + score, 350,380);
-            g2.drawString("You Suck. Made by the Glorious Daniel Nee with assistance from Andy Wang", 360,400);
+            g2.drawString("You Suck. Made by the Glorious Daniel Nee with assistance from Andy Wang", 250,400);
         }
     }
 
