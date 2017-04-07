@@ -19,7 +19,7 @@ public class ZigZagR extends Shape {
             component[0] = new Block(x, y, c);
             component[1] = new Block(x, y-20, c);
             component[2] = new Block(x-20, y, c);
-            component[3] = new Block(x-20, y-20, c);
+            component[3] = new Block(x-20, y+20, c);
         }else if(orientation == 2) {
             component[0] = new Block(x, y, c);
             component[1] = new Block(x+20, y, c);

@@ -44,7 +44,6 @@ public class Main extends JPanel {
                         addedPiece();
                         removeRows();
                         newPiece();
-                        viewMap();
                     } else {
                         curr.update(Shape.SOUTH);
                     }
@@ -83,6 +82,8 @@ public class Main extends JPanel {
             curr = new LeftL(280, 120, 1, disp.getColor());
         } else if (disp instanceof ZigZagR) {
             curr = new ZigZagR(280, 120, 1, disp.getColor());
+        } else if (disp instanceof ZigZagL) {
+            curr = new ZigZagL(280, 120, 1, disp.getColor());
         }
         disp = newShape(2);
     }
@@ -101,7 +102,8 @@ public class Main extends JPanel {
     }
     
     public Shape newShape(int t) {
-        int rando = (int) (Math.random() * 6) + 1;
+        int rando = (int) (Math.random() * 7) + 1;
+        System.out.println(rando);
         Color c = colors[(int)(Math.random() * 6)];
         if(t == 1) {
             if (rando == 1) {
@@ -115,9 +117,11 @@ public class Main extends JPanel {
             } else if (rando == 5) {
                 return new LeftL(280, 120, 1, c);
             } else if (rando == 6) {
+                return new ZigZagL(280, 120, 1, c);
+            } else if (rando == 7) {
                 return new ZigZagR(280, 120, 1, c);
             }
-        }else if(t == 2) {
+        } else if(t == 2) {
             if (rando == 1) {
                 return new TShape(610, 160, 1, c);
             } else if (rando == 2) {
@@ -127,9 +131,11 @@ public class Main extends JPanel {
             } else if (rando == 4) {
                 return new RightL(630, 180, 1, c);
             } else if(rando == 5) {
-                return new LeftL(630, 180, 1, c);
+                return new LeftL(610, 180, 1, c);
             }else if (rando == 6) {
-                return new ZigZagR(630, 180, 1, c);
+                return new ZigZagL(610, 180, 1, c);
+            }else if (rando == 7) {
+                return new ZigZagR(610, 180, 1, c);
             }
         }
         return new TShape(0, 0, 1, Color.BLACK);
