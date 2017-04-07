@@ -233,7 +233,7 @@ public class Main extends JPanel {
 
             //Actual Map
             g2.setColor(Color.BLACK);
-            g2.drawString("Score: " + score + " Level: " + level, 80,80);
+            g2.drawString("Score: " + score + " Level: " + level, 80,70);
             for (int r = 0; r < fill.length; r++) {
                 for (int c = 0; c < fill[r].length; c++) {
                     g2.drawRect(c * 20 + 80, r * 20 + 80, 20, 20);
